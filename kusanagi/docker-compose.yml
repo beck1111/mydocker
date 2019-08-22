@@ -36,7 +36,7 @@ services:
     container_name: kusanagi-mariadb
     image: mariadb:10.0.24
     environment:
-      MYSQL_ROOT_PASSWORD: password2
+      MYSQL_ROOT_PASSWORD: password4
       MYSQL_USER:     beck1111
       MYSQL_PASSWORD: password1
       MYSQL_DATABASE: wordpress
