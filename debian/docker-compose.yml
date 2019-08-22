@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - fpm
+    volumes:
+#      - C:\Users\park\git\amina:/usr/share/nginx/html
+      - ./server.conf:/etc/nginx/nginx.conf
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    
+  fpm:
+    #php:7.2-apache-stretch
+    build: ./app
+    container_name: fpm
+    environment:
+      TZ: "Asia/Tokyo"
+      DEVELOP: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      #- ./app/config:/usr/local/etc/php
+      - C:\Users\park\git\amina:/var/www/html

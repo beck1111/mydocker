@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    #restart: always
+    environment:
+      TZ: "Asia/Tokyo"
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devuser
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/git/mysql:/var/lib/mysql
+      - "./db/init:/docker-entrypoint-initdb.d"
+    command: "--innodb-use-native-aio=0"
+  php:
+    #php:7.2-apache-stretch
+    build: ./app
+    container_name: php
+    environment:
+      TZ: "Asia/Tokyo"
+      DEVELOP: "true"
+    ports:
+      - 80:80
+      - 8000:8000
+      - 443:443
+    links:
+      - mysql:mysql
+    volumes:
+      - ~/git:/var/www/html
+      #- ./app/config:/usr/local/etc/php
