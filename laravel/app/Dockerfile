@@ -5,9 +5,9 @@ RUN apt-get update \
     && apt-get clean \
     && mkdir /var/log/php && chmod 777 /var/log/php \
     && a2enmod rewrite
+#composer install
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
-COPY ./config/default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./config/php.ini /usr/local/etc/php/
-COPY ./config/phpinfo.php /var/www/html/
-ADD ./config/bashrc.txt /root/.bashrc
+#xdebug install
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug

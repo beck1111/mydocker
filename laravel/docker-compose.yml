@@ -25,10 +25,12 @@ services:
       DEVELOP: "true"
     ports:
       - 80:80
-      - 8000:8000
       - 443:443
+      - 9001:9001
     links:
       - mysql:mysql
     volumes:
       - ~/git:/var/www/html
-      #- ./app/config:/usr/local/etc/php
+      - ./app/config/vhost:/etc/apache2/sites-available
+      - ./app/config/home:/root
+      - ./app/config/php.ini:/usr/local/etc/php/php.ini
