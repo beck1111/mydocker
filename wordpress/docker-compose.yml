@@ -17,7 +17,7 @@ services:
     #restart: always
     environment:
       TZ: "Asia/Tokyo"
-      MYSQL_ROOT_PASSWORD: Texas0071!
+      MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
     ports:
       - 3307:3306

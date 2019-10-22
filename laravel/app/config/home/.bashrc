@@ -5,6 +5,6 @@
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias ll='ls -la'
+alias ll='ls -la --color=auto'
 alias ff='find ./* -name'
 alias grep='grep --color=auto'

@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+    volumes:
+      - "es_data:/usr/share/elasticsearch/data"
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.4.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL="http://elasticsearch:9200"
+      - I18N_LOCALE="ja-JP"
+    volumes:
+      - ./ja-JP.json:/usr/share/kibana/x-pack/plugins/translations/translations/ja-JP.json
+    links:
+      - elasticsearch
+
+  logstash:
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.4.0
+    ports:
+      - "5044:5044"
+      - "43448:43448"
+      - "9600:9600"
+    volumes:
+      - "./data/logstash/pipeline:/usr/share/logstash/pipeline"
+      - "./data/nginx/log:/var/log/nginx"
+    links:
+      - elasticsearch
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "8888:80"
+    volumes:
+      - "./data/nginx/log:/var/log/nginx"
+    depends_on:
+      - logstash
+
+volumes:
+  es_data:
+    driver: local
