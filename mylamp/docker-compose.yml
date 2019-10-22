@@ -1,41 +1,36 @@
 version: '3'
 services:
-
   mariadb:
     #image: mariadb:10.3-bionic
     image: mariadb:5.5
     container_name: mariadb
-    #restart: always
+    restart: always
     environment:
       TZ: "Asia/Tokyo"
-      MYSQL_ROOT_PASSWORD: Texas0071!
+      MYSQL_ROOT_PASSWORD: amina
       MYSQL_DATABASE: amina
     ports:
       - 3306:3306
     volumes:
-     - "./db/init:/docker-entrypoint-initdb.d"
-
+      - ~/git/mysql:/var/lib/mysql
+      - "./db/init:/docker-entrypoint-initdb.d"
+    #command: "--innodb-use-native-aio=0"
   app:
     #php:7.2-apache-stretch
     build: ./app
     container_name: app
     environment:
       TZ: "Asia/Tokyo"
-      DEVELOP: "true"
+      #DEVELOP: "true"
     ports:
       - 80:80
       - 443:443
     links:
-      - mariadb:mydb
+      - mariadb:mariadb
+      #- mysql:mysql
     volumes:
       - ~/git:/var/www/html
       #- ./app/config:/usr/local/etc/php
-  #adminer:
-  #  image: adminer
-  #  container_name: adminer
-  #  restart: always
-  #  ports:
-  #    - 8080:8080
   #mysql:
   #  image: mysql:5.7
   #  environment:

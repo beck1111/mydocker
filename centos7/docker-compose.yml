@@ -1,0 +1,37 @@
+version: '3'
+services:
+  db:
+    image: postgres:10.5
+    container_name: postgres
+    ports:
+      - 5432:5432
+    #volumes_from:
+    volumes:
+    #  - my_data
+      - /tmp/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    restart: always
+    #  php:
+    #    #php:7.2-apache-stretch
+    #    build: ./app
+    #    container_name: php
+    #    environment:
+    #      TZ: "Asia/Tokyo"
+    #      DEVELOP: "true"
+    #    ports:
+    #      - 80:80
+    #      - 443:443
+    #    links:
+    #      - mysql:mysql
+    #    volumes:
+    #      - ~/git:/var/www/html
+    #  - ./app/config/vhost:/etc/apache2/sites-available
+    #  - ./app/config/home:/root
+    #  - ./app/config/php.ini:/usr/local/etc/php/php.ini
+  #my_data:
+  #  image: busybox
+  #  volumes:
+  #    - ~/pgdata:/var/lib/postgresql/data

@@ -26,7 +26,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 9001:9001
     links:
       - mysql:mysql
     volumes:
