@@ -8,7 +8,13 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      discovery.type: "single-node"
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms256m -Xmx512m"
+    ulimits:
+      memlock:
+       soft: -1
+       hard: -1
     volumes:
       - "es_data:/usr/share/elasticsearch/data"
 
@@ -34,20 +40,20 @@ services:
       - "9600:9600"
     volumes:
       - "./data/logstash/pipeline:/usr/share/logstash/pipeline"
-      - "./data/nginx/log:/var/log/nginx"
+#      - "./data/nginx/log:/var/log/nginx"
     links:
       - elasticsearch
 
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    ports:
-      - "8888:80"
-    volumes:
-      - "./data/nginx/log:/var/log/nginx"
-    depends_on:
-      - logstash
-
+#  nginx:
+#    container_name: nginx
+#    image: nginx:latest
+#    ports:
+#      - "8888:80"
+#    volumes:
+#      - "./data/nginx/log:/var/log/nginx"
+#    depends_on:
+#      - logstash
+#
 volumes:
   es_data:
     driver: local
