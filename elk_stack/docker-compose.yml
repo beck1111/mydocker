@@ -17,6 +17,7 @@ services:
        hard: -1
     volumes:
       - "es_data:/usr/share/elasticsearch/data"
+    restart: always
 
   kibana:
     container_name: kibana
@@ -30,6 +31,8 @@ services:
       - ./ja-JP.json:/usr/share/kibana/x-pack/plugins/translations/translations/ja-JP.json
     links:
       - elasticsearch
+    depends_on:
+      - "elasticsearch"
 
   logstash:
     container_name: logstash
@@ -43,6 +46,8 @@ services:
 #      - "./data/nginx/log:/var/log/nginx"
     links:
       - elasticsearch
+    depends_on:
+      - "elasticsearch"
 
 #  nginx:
 #    container_name: nginx
