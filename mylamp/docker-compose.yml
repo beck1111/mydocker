@@ -29,8 +29,9 @@ services:
       - mariadb:mariadb
       #- mysql:mysql
     volumes:
-      - ~/git:/var/www/html
-      #- ./app/config:/usr/local/etc/php
+      - ~/git:/var/www/amina
+      - ./app/config/apache:/etc/apache2/sites-available
+      - ./app/config/php.ini:/usr/local/etc/php/php.ini
   #mysql:
   #  image: mysql:5.7
   #  environment:
